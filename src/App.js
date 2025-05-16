@@ -59,15 +59,33 @@ function App() {
     formData.append('file', imageBlob, identifier || 'cropped_image.jpg');
     
     const targetUrl = `${BACKEND_URL}/predict`;
+    const checkHealth = `${BACKEND_URL}/health`
     console.log("!!! CRITICAL: Attempting to fetch from this EXACT URL:", targetUrl);
     if (!BACKEND_URL) {
         console.error("!!! CRITICAL: API_BASE_URL is undefined or empty!");
     }
     try {
+      const healthResponse = await fetch(checkHealth)
+
+      const healthResponseText = await healthResponse.text();
+
+      let healthResponseData;
+      try {
+        healthResponseData = JSON.parse(healthResponseText);
+      } catch (jsonError) {
+        throw new Error(`Invalid JSON health response from server: ${healthResponseText}`);
+      }
+
+      if (!healthResponse.ok) {
+        const errorMsg = healthResponseData.error || `API Error: ${healthResponse.status} ${healthResponse.statusText}`;
+        throw new Error(errorMsg);
+      }
+
       const response = await fetch(targetUrl, {
         method: 'POST',
         body: formData,
-    });
+        contentType: 'multipart/form-data'
+      });
 
 
       const responseText = await response.text();
