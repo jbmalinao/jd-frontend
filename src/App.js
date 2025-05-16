@@ -14,7 +14,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const BACKEND_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const BACKEND_URL = process.env.REACT_APP_API_URL || 'https://jd-backend-e1vf.onrender.com';
 
   useEffect(() => {
     console.log("App component mounted, trying to hide splash screen."); 
