@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+# /build
 
 # misc
 .DS_Store
@@ -28,7 +28,7 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
+# build/
 develop-eggs/
 dist/
 downloads/
